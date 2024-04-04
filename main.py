@@ -38,6 +38,3 @@ if __name__ == "__main__":
     data = read_and_transform_data()
     oceania_df = filter_data_equal_to(data, "continent", "Oceania")
     scatter_plot(oceania_df, "year", "gdpPercap")
-
-
-
