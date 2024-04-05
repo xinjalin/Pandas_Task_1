@@ -49,7 +49,7 @@ def scatter_plot(df, x_axis, y_axis):
     # Add title and labels
     plt.title("Total GDP of Australia and New Zealand across time")
     plt.xlabel("Year")
-    plt.ylabel("GDP per capita")
+    plt.ylabel("Total GDP")
     plt.legend()
 
     # Show the plot
