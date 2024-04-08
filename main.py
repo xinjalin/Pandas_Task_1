@@ -16,10 +16,13 @@ def pivot_data_wide_to_long(df):
     # Melt the dataframe to transform it into long format
     gapminder_all_melted_df = pd.melt(df, id_vars=["continent", "country"], var_name="year")
 
-    # Split the year column to get gdp_perCap, lifeExp, and pop separately
+    # Split the year column to get gdpPerCap, lifeExp, and pop separately
     gapminder_all_melted_df[["measure", "year"]] = gapminder_all_melted_df["year"].str.split("_", expand=True)
 
     # Pivot the dataframe using the measures column
+    # create a multiIndex of continent, country, year
+    # measure column values will become the new column headers with the corresponding values underneath
+    # reset the multiIndex for the resulting dataframe converting them back to normal columns
     gapminder_all_pivoted_df = gapminder_all_melted_df.pivot_table(index=["continent", "country", "year"],
                                                                    columns="measure", values="value").reset_index()
 
