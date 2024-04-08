@@ -16,7 +16,7 @@ def pivot_data_wide_to_long(df):
     # Melt the dataframe to transform it into long format
     gapminder_all_melted_df = pd.melt(df, id_vars=["continent", "country"], var_name="year")
 
-    # Split the year column to get gdpPerCap, lifeExp, and pop separately
+    # Split the year column to get gdpPercap, lifeExp, and pop separately
     gapminder_all_melted_df[["measure", "year"]] = gapminder_all_melted_df["year"].str.split("_", expand=True)
 
     # Pivot the dataframe using the measures column
@@ -27,6 +27,11 @@ def pivot_data_wide_to_long(df):
                                                                    columns="measure", values="value").reset_index()
 
     return gapminder_all_pivoted_df
+
+
+def calc_total_gdp(df, new_col, gdp_col, pop_col):
+    # Calculate total GDP and add column "total_gdp" to dataframe
+    df[new_col] = df[gdp_col] * df[pop_col]
 
 
 def filter_data_equal_to(df, column, value):
@@ -62,4 +67,5 @@ def scatter_plot(df, x_axis, y_axis):
 if __name__ == "__main__":
     base_df = read_csv()
     transformed_df = pivot_data_wide_to_long(base_df)
-    scatter_plot(transformed_df, "year", "gdpPercap")
+    calc_total_gdp(transformed_df, "total_gdp", "gdpPercap", "pop")
+    scatter_plot(transformed_df, "year", "total_gdp")
